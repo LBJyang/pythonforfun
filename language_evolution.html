@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>编程语言的进化之旅</title>
+    <style>
+      body {
+        font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei";
+        background: linear-gradient(180deg, #d6f5ff, #ffffff);
+        text-align: center;
+        padding: 40px;
+      }
+      h1 {
+        font-size: 2em;
+        color: #00796b;
+      }
+      .robot {
+        width: 120px;
+        height: 120px;
+        background: #90caf9;
+        border-radius: 20px;
+        margin: 20px auto;
+        position: relative;
+        animation: float 2s ease-in-out infinite;
+      }
+      .eye {
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 35px;
+      }
+      .eye.left {
+        left: 30px;
+      }
+      .eye.right {
+        right: 30px;
+      }
+      .mouth {
+        width: 50px;
+        height: 10px;
+        background: white;
+        border-radius: 5px;
+        position: absolute;
+        bottom: 25px;
+        left: 35px;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+      .speech {
+        background: #ffffff;
+        border: 2px solid #90caf9;
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 1em;
+        color: #00796b;
+        min-width: 120px;
+        margin-bottom: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      }
+      .code-box {
+        background-color: #f8f9fa;
+        border: 2px solid #90caf9;
+        border-radius: 16px;
+        padding: 20px;
+        width: 80%;
+        margin: 20px auto;
+        font-family: "Courier New", monospace;
+        font-size: 1.2em;
+        white-space: pre;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .desc {
+        font-size: 1em;
+        color: #555;
+        margin-bottom: 30px;
+      }
+      button {
+        background-color: #29b6f6;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 12px 24px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      button:hover {
+        background-color: #0288d1;
+        transform: scale(1.05);
+      }
+      .fade {
+        animation: fadeIn 1.2s ease forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🤖 从机器到人类：编程语言的进化之旅</h1>
+
+    <div class="robot fade">
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+      <div class="mouth"></div>
+    </div>
+
+    <div class="speech" id="speech">
+      你好，我是小译机器人！让我带你看看电脑是怎么学会人话的～
+    </div>
+
+    <div class="code-box fade" id="code">
+      10110000 01100001 10110010 01100001 11001101 00100001
+    </div>
+    <div class="desc" id="desc">
+      机器码：0和1的世界，计算机真正能理解的语言。
+    </div>
+
+    <button onclick="nextStep()">点击查看下一层 🔼</button>
+
+    <script>
+      const steps = [
+        {
+          code: "10110000 01100001\n10110010 01100001\n11001101 00100001",
+          desc: "机器码：0和1的世界，计算机真正能理解的语言。",
+          say: "这是机器码，电脑的母语，全是0和1哦！",
+        },
+        {
+          code: "MOV AL, 61h\nMOV DL, AL\nINT 21h",
+          desc: "汇编语言：对CPU说话，告诉它一步步该做什么。",
+          say: "我把这些0和1翻译成汇编语言，人类终于能看懂一点啦！",
+        },
+        {
+          code: "#include <stdio.h>\n\nint main() {\n    char a = 'a';\n    printf(\"%c\\n\", a);\n    return 0;\n}",
+          desc: "C语言：结构化的语言，更接近计算机，但人类仍能读懂。",
+          say: "再上一层，这是C语言，工程师写程序时最喜欢用它！",
+        },
+        {
+          code: 'print("a")',
+          desc: "Python：最接近人类语言，像在和电脑聊天。",
+          say: "现在是Python啦！这几乎就是人类说话的方式！",
+        },
+      ];
+
+      let index = 0;
+
+      // 使用浏览器的语音合成功能朗读中文
+      function speak(text) {
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = "zh-CN";
+        msg.rate = 1;
+        window.speechSynthesis.cancel(); // 先清除上一次
+        window.speechSynthesis.speak(msg);
+      }
+
+      function nextStep() {
+        index++;
+        if (index >= steps.length) index = 0;
+        const codeBox = document.getElementById("code");
+        const desc = document.getElementById("desc");
+        const speech = document.getElementById("speech");
+        codeBox.classList.remove("fade");
+        speech.classList.remove("fade");
+        void codeBox.offsetWidth;
+        codeBox.textContent = steps[index].code;
+        desc.textContent = steps[index].desc;
+        speech.textContent = steps[index].say;
+        codeBox.classList.add("fade");
+        speech.classList.add("fade");
+        speak(steps[index].say);
+      }
+    </script>
+  </body>
+</html>
