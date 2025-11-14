@@ -13,7 +13,15 @@ password = "YQScBURvpXyAPQjm"
 to_addr = "yangfan6262008@gmail.com"
 smtp_server = "smtp.163.com"
 
-msg = MIMEText("hello,send by Python...", "plain", "utf-8")
+# msg = MIMEText("hello,send by Python...", "plain", "utf-8")
+msg = MIMEText(
+    "<html><body><h1>Hello</h1>"
+    + '<p>send by <a href="http://www.python.org">Python</a>...</p>'
+    + "</body></html>",
+    "html",
+    "utf-8",
+)
+
 msg["From"] = _format_addr(f"Python爱好者<{from_addr}>")
 msg["To"] = _format_addr(f"管理员<{to_addr}>")
 msg["Subject"] = Header("来自SMTP的问候……", "utf-8").encode()
